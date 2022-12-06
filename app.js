@@ -29,10 +29,12 @@ const express = require('express')
           // Create User => (Registration) ..
       app.post('/api/register', async (req, res) => {
         const { username, password } = req.body;
+            // checking if user inserted data or not
           if (!username || !password) return res.json({ msg: "Missing Credentials" });
-              // check if passed username used before or not
+              // checking if inserted username used before or not
              const user = await User.findOne({ username: username });
                if (user) return res.json({ msg: "Username Already Exist, user another One" })
+                   // checking if inserted data meeting the criteria or not
                   const userToValidate = new User({ username: username, password: password }); 
                     const err = userToValidate.validateSync();
                       if (err) {
@@ -40,6 +42,7 @@ const express = require('express')
                          } else {
                           const hashedPass = await bcrypt.hash(password, 10);
                          let newUser = new User({ username: username, password: hashedPass });
+                          // saving user with hashed password
                       newUser.save()
                     res.json(newUser)
                   }  
