@@ -69,14 +69,28 @@ const express = require('express')
           });    
 
  
-
+           const authMiddleware = async (req, res, next) => {
+  /*
+  You Can save Token In Which Place You Want ( Like Cookies Or Sessions ) To Be Able To Access It In The Verification Step
+  */
+         const authHeader = req.headers.token
+        
+          if (!authHeader || !authHeader.startsWith('Bearer ')) {
+              res.json({ msg: "No Token Provided" });
+          }
+        
+          const accessToken = authHeader.split(' ')[1]
+            jwt.verify(accessToken, process.env.JWT_SECRET, (error, payload) => {
+               if (error) return res.json({ msg: "Sorry, you can't access this route" });
+               const { id, username } = payload
+               req.user = payload
+               next()
+            })
+          }
 
              // get all users
-           app.get('/', async (req, res) => { 
-             const users = await User.findOne({})
-             res.send(users)  
+           app.get('/api/all-users', authMiddleware, async (req, res) => { 
+             const users = await User.find({});
+             res.send(users);
           });
 
-
-
-  
