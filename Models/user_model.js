@@ -1,8 +1,6 @@
 const mongoose = require('mongoose')
 
-
-
-  const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
@@ -15,8 +13,7 @@ const mongoose = require('mongoose')
         minLength: [ 5, 'Password Length Must be at least 5' ],
     }
   }, { versionKey: false });
-
-
+    
 
   const User = mongoose.model('User', userSchema)
   module.exports = User

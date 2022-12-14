@@ -1,11 +1,14 @@
 const express = require('express')
   const mongoose =  require('mongoose')
-    require('dotenv').config()
-      const jwt = require('jsonwebtoken')
-        const bcrypt = require('bcrypt')
-         const User = require('./Models/user_model')
-           const app = express()
-
+     require('dotenv').config()
+       const jwt = require('jsonwebtoken')
+          const bcrypt = require('bcrypt')
+             const User = require('./Models/user_model')
+                const Job = require('./Models/job_model')
+                   require('./Models/job_model')
+                      const multer = require('multer')
+                             const app = express()
+                       
 
           app.listen(3000, () => {
              console.log("Server is running on port 3000 ...");
@@ -73,13 +76,13 @@ const express = require('express')
   /*
   You Can save Token In Which Place You Want ( Like Cookies Or Sessions ) To Be Able To Access It In The Verification Step
   */
-         const authHeader = req.headers.token
+         const authHeaders = req.headers.Authorization
         
-          if (!authHeader || !authHeader.startsWith('Bearer ')) {
+          if (!authHeaders || !authHeaders.startsWith('Bearer ')) {
               res.json({ msg: "No Token Provided" });
           }
         
-          const accessToken = authHeader.split(' ')[1]
+          const accessToken = authHeaders.split(' ')[1]
             jwt.verify(accessToken, process.env.JWT_SECRET, (error, payload) => {
                if (error) return res.json({ msg: "Sorry, you can't access this route" });
                const { id, username } = payload
@@ -93,4 +96,123 @@ const express = require('express')
              const users = await User.find({});
              res.send(users);
           });
+   
+           
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+
+               // multer configuration
+           const multerConfig = multer({ dest: 'images/', limits: { fileSize: 2000000 } })
+           const upload =  multer(multerConfig).single('image'); 
+
+      app.post('/api/apply', (req, res, next) => { 
+          const { fullName, email, address, dateOfBirth } = req.body;
+            // check if user provided data or not
+          if (!fullName || !email || !address || !dateOfBirth) return res.json({
+               msg: "Missing Credentials"
+            });
+         
+                 // data to check validity
+                const newJob = new Job({
+                    fullName: fullName,
+                    email: email,
+                    address: address,
+                    dateOfBirth: new Date(dateOfBirth),
+                  });
+
+                  // checking if inserted data meeting the criteria or not
+            const error =  newJob.validateSync();
+              if (error) return res.json({ validationError: error.message });   
+                  
+
+                 next()
+                                
+                 // uploading user image
+                upload (req, res, async (err) => {
+                  if (err instanceof multer.MulterError) return res.json({ msg: err.message })
+                  if (err) return res.json({ msg: err.message })
+                  const userImagePath = req.file.path
+                  console.log(req.file)
+
+                    // checking if userEmail inserted before or not 
+                  const userEmail = await User.findOne({ email: email });
+                  if (userEmail) return res.json({ msg: 'Email Already used' });
+
+                   // converting date to years
+                 const dateInYears = new Date(dateOfBirth).getYear();
+                 if (dateInYears < 20) return res.json({ msg: 'Unavailable Age' });
+
+                     // final job-data to save 
+                  const jobData = new Job({
+                    fullName: fullName,
+                    email: email,
+                    address: address,
+                    dateOfBirth: dateOfBirth,
+                    userImagePath: userImagePath
+                  });
+                  
+                  console.log(jobData)
+
+                   // saving job-data
+                  jobData.save()
+                  res.json(jobData)
+
+              })                    
+            });       
+
+
+
+
+
+
+
+
+
+
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+
+
+
+        
