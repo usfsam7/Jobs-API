@@ -74,7 +74,7 @@ const express = require('express')
  
            const authMiddleware = async (req, res, next) => {
   /*
-  You Can save Token In Which Place You Want ( Like Cookies Or Sessions ) To Be Able To Access It In The Verification Step
+  You Can save Token In Which Place You Want ( Like Cookies ) To Be Able To Access It In The Verification Step
   */
          const authHeaders = req.headers.Authorization
         
@@ -173,7 +173,7 @@ const express = require('express')
                     dateOfBirth: dateOfBirth,
                     userImagePath: userImagePath
                   });
-                  
+
                   console.log(jobData)
 
                    // saving job-data
