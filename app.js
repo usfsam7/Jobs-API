@@ -157,11 +157,11 @@ const express = require('express')
                   const userImagePath = req.file.path
                   console.log(req.file)
 
-                    // checking if userEmail inserted before or not 
+                    // checking if inserted email used before or not 
                   const userEmail = await User.findOne({ email: email });
                   if (userEmail) return res.json({ msg: 'Email Already used' });
 
-                   // converting date to years
+                   // converting date of user-birth to years
                  const dateInYears = new Date(dateOfBirth).getYear();
                  if (dateInYears < 20) return res.json({ msg: 'Unavailable Age' });
 
