@@ -94,7 +94,7 @@ const express = require('express')
              // get all users
            app.get('/api/all-users', authMiddleware, async (req, res) => { 
              const users = await User.find({});
-             res.send(users);
+             res.json(users);
           });
    
            
