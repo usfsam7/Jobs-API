@@ -5,10 +5,9 @@ const express = require('express')
           const bcrypt = require('bcrypt')
              const User = require('./Models/user_model')
                 const Job = require('./Models/job_model')
-                   require('./Models/job_model')
                       const multer = require('multer')
-                             const app = express()
-                       
+                        const app = express()
+                         const bodyParser = require('body-parser')
 
           app.listen(3000, () => {
              console.log("Server is running on port 3000 ...");
@@ -22,8 +21,9 @@ const express = require('express')
     
 
          // Middlewares
-         app.use(express.urlencoded({ extended: true }))
-         app.use(express.json())
+         app.use(express.json());
+         app.use(bodyParser.urlencoded({ extended: true }))
+         
          
 
 
@@ -72,21 +72,21 @@ const express = require('express')
           });    
 
  
-           const authMiddleware = async (req, res, next) => {
+           const authMiddleware =  (req, res, next) => {
   /*
   You Can save Token In Which Place You Want ( Like Cookies ) To Be Able To Access It In The Verification Step
   */
-         const authHeaders = req.headers.Authorization
-        
-          if (!authHeaders || !authHeaders.startsWith('Bearer ')) {
-              res.json({ msg: "No Token Provided" });
-          }
+         const authHeaders = req.headers.token
+         console.log(req.headers)
+          if (!authHeaders || !authHeaders.startsWith('Bearer ')) return res.json({
+             msg: "No Token Provided" 
+          });
         
           const accessToken = authHeaders.split(' ')[1]
             jwt.verify(accessToken, process.env.JWT_SECRET, (error, payload) => {
                if (error) return res.json({ msg: "Sorry, you can't access this route" });
                const { id, username } = payload
-               req.user = payload
+               req.user = { id, username }
                next()
             })
           }
@@ -97,100 +97,68 @@ const express = require('express')
              res.json(users);
           });
    
-           
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+       
+              
 
           
 
-               // multer configuration
-           const multerConfig = multer({ dest: 'images/', limits: { fileSize: 2000000 } })
-           const upload =  multer(multerConfig).single('image'); 
+         // multer configuration
+     const multerConfig = multer({ dest: 'images/', limits: { fileSize: 2000000 } })
+     const upload =  multer(multerConfig).single('image'); 
 
-      app.post('/api/apply', (req, res, next) => { 
-          const { fullName, email, address, dateOfBirth } = req.body;
-            // check if user provided data or not
-          if (!fullName || !email || !address || !dateOfBirth) return res.json({
-               msg: "Missing Credentials"
+  app.post('/api/apply', async (req, res) => {
+      const { fullName, email, address, dateOfBirth } = req.body;
+          // data to check validity
+        const newJob = new Job({
+           fullName: fullName,
+           email: email,
+           address: address,
+           dateOfBirth: dateOfBirth,
+         });
+  
+           // checking if inserted data meeting the criteria or not
+        const error = newJob.validateSync();
+          if (error) return res.json({ validationError: error.message });
+  
+           // checking if inserted email used before or not
+        const jobEmail = await Job.findOne({ email: email });
+          if (jobEmail) return res.json({ msg: "Email Already used, use another one" });
+  
+           // Getting user Age
+        const userAge =
+          new Date().getFullYear() - new Date(dateOfBirth).getFullYear();
+           if (userAge < 20) return res.json({ mgs: "Unavailable Age" });
+  
+        // uploading user image
+        upload(req, res, async (err) => {
+          if (err instanceof multer.MulterError) return res.json({ msg: err.message });
+           if (err) return res.json({ msg: err.message });
+            const userImagePath = req.file.path;
+            console.log(req.file);
+  
+          // // adding imagePath to job-data
+          const jobData = new Job({
+              fullName: fullName,
+              email: email,
+              address: address,
+              dateOfBirth: dateOfBirth,
+              userImagePath: userImagePath,
             });
-         
-                 // data to check validity
-                const newJob = new Job({
-                    fullName: fullName,
-                    email: email,
-                    address: address,
-                    dateOfBirth: new Date(dateOfBirth),
-                  });
+  
+           jobData.save();
+           res.json(jobData);
+  
+        });
+    });       
 
-                  // checking if inserted data meeting the criteria or not
-            const error =  newJob.validateSync();
-              if (error) return res.json({ validationError: error.message });   
-                  
 
-                 next()
-                                
-                 // uploading user image
-                upload (req, res, async (err) => {
-                  if (err instanceof multer.MulterError) return res.json({ msg: err.message })
-                  if (err) return res.json({ msg: err.message })
-                  const userImagePath = req.file.path
-                  console.log(req.file)
-
-                    // checking if inserted email used before or not 
-                  const userEmail = await User.findOne({ email: email });
-                  if (userEmail) return res.json({ msg: 'Email Already used' });
-
-                   // converting date of user-birth to years
-                 const dateInYears = new Date(dateOfBirth).getYear();
-                 if (dateInYears < 20) return res.json({ msg: 'Unavailable Age' });
-
-                     // final job-data to save 
-                  const jobData = new Job({
-                    fullName: fullName,
-                    email: email,
-                    address: address,
-                    dateOfBirth: dateOfBirth,
-                    userImagePath: userImagePath
-                  });
-
-                  console.log(jobData)
-
-                   // saving job-data
-                  jobData.save()
-                  res.json(jobData)
-
-              })                    
-            });       
+      
 
 
 
+             
 
-
-
-
-
-
+               
 
         
           
