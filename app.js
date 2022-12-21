@@ -94,7 +94,7 @@ const express = require('express')
              // get all users
            app.get('/api/all-users', authMiddleware, async (req, res) => { 
              const users = await User.find({});
-             res.json({users});
+             res.json({ users });
           });
    
        
@@ -111,44 +111,44 @@ app.post('/api/apply', authMiddleware, async (req, res) => { upload(req, res, as
     if (err) return res.json({ msg: err.message });
        const userImagePath = req.file.path;
      
-    const { fullName, email, address, dateOfBirth } = req.body;
-      if (!fullName || !email || !address || !dateOfBirth)
-         return res.json({ msg: "Missing Credentials" });
+      const { fullName, email, address, dateOfBirth } = req.body;
+        if (!fullName || !email || !address || !dateOfBirth)
+          return res.json({ msg: "Missing Credentials" });
      
-         // data to check validity
-       const newJob = new Job({
-         fullName: fullName,
-         email: email,
-         address: address,
-         dateOfBirth: dateOfBirth,
-       });
+             // data to check validity
+           const newJob = new Job({
+             fullName: fullName,
+             email: email,
+             address: address,
+             dateOfBirth: dateOfBirth,
+           });
      
-          // checking if inserted data meeting the criteria or not
-       const error = newJob.validateSync();
-        if (error) return res.json({ validationError: error.message });
+                // checking if inserted data meeting the criteria or not
+             const error = newJob.validateSync();
+              if (error) return res.json({ validationError: error.message });
      
-          // checking if inserted email used before or not
-       const jobEmail = await Job.findOne({ email: req.body.email });
-        if (jobEmail) return res.json({ msg: "Email Already used, use another one" });
+                // checking if inserted email used before or not
+             const jobEmail = await Job.findOne({ email: req.body.email });
+              if (jobEmail) return res.json({ msg: "Email Already used, use another one" });
      
-          // Getting user Age
-       const userAge = new Date().getFullYear() - new Date(dateOfBirth).getFullYear();
-        if (userAge < 20) return res.json({ mgs: "Unavailable Age" });
+            // Getting user Age
+         const userAge = new Date().getFullYear() - new Date(dateOfBirth).getFullYear();
+          if (userAge < 20) return res.json({ mgs: "Unavailable Age" });
      
-          // job-data to save
-       const jobData = new Job({
-         fullName: fullName,
-         email: email,
-         address: address,
-         dateOfBirth: dateOfBirth,
-         userImagePath: userImagePath,
-       });
-     
-       jobData.save();
-       res.json({ jobData });
+             // job-data to save
+          const jobData = new Job({
+            fullName: fullName,
+            email: email,
+            address: address,
+            dateOfBirth: dateOfBirth,
+            userImagePath: userImagePath,
+          });
+       
+         jobData.save();
+         res.json({ jobData });
 
-    });       
-  });
+      });       
+    });
 
       
 
