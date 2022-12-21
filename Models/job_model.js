@@ -25,7 +25,7 @@ const mongoose = require('mongoose')
     required: true,
      type: String,
      match: [/^\d{4}-\d{2}-\d{2}$/, 
-      'Invalid Date Format, it must be Like year-month-days (yyyy-mm-d)'
+      'Invalid Date Format, it must be Like year-month-days (yyyy-mm-dd)'
     ],
    },
    userImagePath: {
