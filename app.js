@@ -2,12 +2,12 @@ const express = require('express')
   const mongoose =  require('mongoose')
      require('dotenv').config()
        const jwt = require('jsonwebtoken')
-          const bcrypt = require('bcrypt')
-             const User = require('./Models/user_model')
-                const Job = require('./Models/job_model')
-                      const multer = require('multer')
-                        const app = express()
-                         const bodyParser = require('body-parser')
+       const bcrypt = require('bcrypt')
+       const User = require('./Models/user_model')
+       const Job = require('./Models/job_model')
+       const multer = require('multer')
+       const app = express()
+       const bodyParser = require('body-parser')
 
           app.listen(3000, () => {
              console.log("Server is running on port 3000 ...");
@@ -156,10 +156,4 @@ const express = require('express')
            const allJobs = await Job.find({});
             res.json({ allJobs })
        });
-
-
-
-
-
-
 
