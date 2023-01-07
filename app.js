@@ -71,7 +71,7 @@ const express = require('express')
               res.json({ token });
           });    
 
- 
+             // checking if user provided token or not 
            const authMiddleware =  (req, res, next) => {
   /*
   You Can save Token In Which Place You Want ( Like Cookies ) To Be Able To Access It In The Verification Step
@@ -151,9 +151,10 @@ app.post('/api/apply', authMiddleware, async (req, res) => { upload(req, res, as
     });
 
       
-
+           // get all applications
        app.get('/api/applications', authMiddleware, async (req, res) => {
            const allJobs = await Job.find({});
             res.json({ allJobs })
          });
 
+      

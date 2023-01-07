@@ -31,7 +31,7 @@ const mongoose = require('mongoose')
    userImagePath: {
      type: String,
    },
- });
+ }, { versionKey: false });
 
 
   const Job = mongoose.model('Job', jobSchema);
