@@ -45,12 +45,11 @@ const Login = async (req, res) => { const { username, password } = req.body;
               res.json({ token });
           }
 
-    // get all users
-const getAllUsers =  async (req, res) => { 
-             const users = await User.find({});
+           // get all users
+    const getAllUsers =  async (req, res) => { 
+           const users = await User.find({});
              res.json({ users });
           }
-           app.get('/api/all-users', authMiddleware, ); 
 
 
             module.exports = {
