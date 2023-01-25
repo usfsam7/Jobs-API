@@ -37,7 +37,7 @@ const Apply =  async (req, res) => { upload(req, res, async (err) => {
           if (userAge < 20) return res.json({ mgs: "Unavailable Age" });
      
              // job-data to save
-          const jobData = new Job({
+          const jobData = new Job({ 
             fullName: fullName,
             email: email,
             address: address,
@@ -63,3 +63,6 @@ const getAllJobs = async (req, res) => {
       Apply,
       getAllJobs,
     }
+
+
+    

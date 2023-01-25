@@ -4,7 +4,7 @@
 
 
 
- const Registration =  async (req, res) => { const { username, password } = req.body;
+    const Registration =  async (req, res) => { const { username, password } = req.body;
             // checking if user inserted data or not
           if (!username || !password) return res.json({ msg: "Missing Credentials" });
               // checking if inserted username used before or not
@@ -27,7 +27,7 @@
 
 
             
-const Login = async (req, res) => { const { username, password } = req.body;
+    const Login = async (req, res) => { const { username, password } = req.body;
                // checking if user inserted data or not
            if (!username || !password) return res.json({ msg: "Missing Credentials" });
                 // checking validity of inserted data
@@ -57,3 +57,4 @@ const Login = async (req, res) => { const { username, password } = req.body;
                Login,
                getAllUsers,
             }    
+            
