@@ -36,7 +36,7 @@
                   // comparing inserted password with original password
                 const passMatching = await bcrypt.compare(password, userData.password);
                       if (!passMatching) return res.json({ msg: "Incorrect Password" });
-                        // sending token
+                        // signing token
                       const name = userData.username;
                     const id = userData.id;
                         // data stored in token
