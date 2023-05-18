@@ -3,5 +3,14 @@
         "algorithmway",
         "aragraphspay",
         "Nums"
-    ]
+    ],
+    "terminal.explorerKind": "integrated",
+    "terminal.integrated.localEchoExcludePrograms": [
+        "vim",
+        "vi",
+        "tmux"
+    ],
+    "terminal.integrated.tabs.location": "left",
+    "terminal.integrated.localEchoStyle": "dim",
+    "terminal.integrated.defaultLocation": "editor"
 }

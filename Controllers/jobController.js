@@ -1,4 +1,4 @@
-   const Job = require('./Models/job_model')
+   const Job = require('../Models/job_model')
    const multer = require('multer')
 
 
@@ -10,13 +10,15 @@
 const Apply =  async (req, res) => { upload(req, res, async (err) => {
     if (err instanceof multer.MulterError) return res.json({ msg: err.message });
     if (err) return res.json({ msg: err.message });
+ 
+      if (!req.file) return res.json({ msg: 'please, upload your image' }); 
        const userImagePath = req.file.path;
-     
+      console.log(userImagePath)
       const { fullName, email, address, dateOfBirth } = req.body;
         if (!fullName || !email || !address || !dateOfBirth)
           return res.json({ msg: "Missing Credentials" });
      
-             // data to check validity
+             // user_data to check validity
            const newJob = new Job({
              fullName: fullName,
              email: email,
@@ -29,15 +31,15 @@ const Apply =  async (req, res) => { upload(req, res, async (err) => {
               if (error) return res.json({ validationError: error.message });
      
                 // checking if inserted email used before or not
-             const jobEmail = await Job.findOne({ email: req.body.email });
-              if (jobEmail) return res.json({ msg: "Email Already used, use another one" });
+             const userEmail = await Job.findOne({ email: req.body.email });
+              if (userEmail) return res.json({ msg: "Email Already used, use another one" });
      
             // Getting user Age
          const userAge = new Date().getFullYear() - new Date(dateOfBirth).getFullYear();
           if (userAge < 20) return res.json({ mgs: "Unavailable Age" });
      
              // job-data to save
-          const jobData = new Job({ 
+          const userData = new Job({ 
             fullName: fullName,
             email: email,
             address: address,
@@ -45,8 +47,8 @@ const Apply =  async (req, res) => { upload(req, res, async (err) => {
             userImagePath: userImagePath,
           });
        
-         jobData.save();
-         res.json({ jobData });
+         userData.save();
+         res.json({ userData });
 
       });       
     }

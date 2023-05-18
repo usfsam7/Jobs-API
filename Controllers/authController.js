@@ -1,4 +1,4 @@
-   const User = require('./Models/user_model')
+   const User = require('../Models/user_model')
     const jwt = require('jsonwebtoken')
        const bcrypt = require('bcrypt')
 
@@ -9,7 +9,7 @@
           if (!username || !password) return res.json({ msg: "Missing Credentials" });
               // checking if inserted username used before or not
              const user = await User.findOne({ username: username });
-               if (user) return res.json({ msg: "Username Already Exist, user another One" })
+               if (user) return res.json({ msg: "Username Already used, use another One" })
                    // checking if inserted data meeting the criteria or not
                   const userToValidate = new User({ username: username, password: password }); 
                     const err = userToValidate.validateSync();
@@ -41,7 +41,7 @@
                     const id = userData.id;
                         // data stored in token
                    const user = { id, name }
-                const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: '25d' })            
+                const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: '25d' });        
               res.json({ token });
           }
 
