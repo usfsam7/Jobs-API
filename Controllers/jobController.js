@@ -19,7 +19,7 @@ const Apply =  async (req, res) => { upload(req, res, async (err) => {
           return res.json({ msg: "Missing Credentials" });
      
              // user_data to check validity
-           const newJob = new Job({
+           const new_job = new Job({
              fullName: fullName,
              email: email,
              address: address,
@@ -27,19 +27,19 @@ const Apply =  async (req, res) => { upload(req, res, async (err) => {
            });
      
                 // checking if inserted data meeting the criteria or not
-             const error = newJob.validateSync();
+             const error = new_job.validateSync();
               if (error) return res.json({ validationError: error.message });
      
                 // checking if inserted email used before or not
-             const userEmail = await Job.findOne({ email: req.body.email });
-              if (userEmail) return res.json({ msg: "Email Already used, use another one" });
+             const user_email = await Job.findOne({ email: req.body.email });
+              if (user_email) return res.json({ msg: "Email Already used, use another one" });
      
             // Getting user Age
-         const userAge = new Date().getFullYear() - new Date(dateOfBirth).getFullYear();
-          if (userAge < 20) return res.json({ mgs: "Unavailable Age" });
+         const user_age = new Date().getFullYear() - new Date(dateOfBirth).getFullYear();
+          if (user_age < 20) return res.json({ mgs: "Unavailable Age" });
      
              // job-data to save
-          const userData = new Job({ 
+          const user_data = new Job({ 
             fullName: fullName,
             email: email,
             address: address,
@@ -47,8 +47,8 @@ const Apply =  async (req, res) => { upload(req, res, async (err) => {
             userImagePath: userImagePath,
           });
        
-         userData.save();
-         res.json({ userData });
+         user_data.save();
+         res.json({ user_data });
 
       });       
     }
