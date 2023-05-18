@@ -55,8 +55,8 @@ const Apply =  async (req, res) => { upload(req, res, async (err) => {
 
 
 const getAllJobs = async (req, res) => {
-           const allJobs = await Job.find({});
-            res.json({ allJobs })
+           const all_jobs = await Job.find({});
+            res.json({ all_jobs })
          }
 
 
