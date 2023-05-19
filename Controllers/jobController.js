@@ -34,7 +34,7 @@ const Apply =  async (req, res) => { upload(req, res, async (err) => {
              const user_email = await Job.findOne({ email: req.body.email });
               if (user_email) return res.json({ msg: "Email Already used, use another one" });
      
-            // Getting user Age
+            // the age of the user
          const user_age = new Date().getFullYear() - new Date(dateOfBirth).getFullYear();
           if (user_age < 20) return res.json({ mgs: "Unavailable Age" });
      
