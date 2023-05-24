@@ -17,7 +17,7 @@ const Apply =  async (req, res) => { upload(req, res, async (err) => {
       const { fullName, email, address, dateOfBirth } = req.body;
         if (!fullName || !email || !address || !dateOfBirth)
           return res.json({ msg: "Missing Credentials" });
-     
+             
              // user_data to check validity
            const new_job = new Job({
              fullName: fullName,
@@ -25,6 +25,7 @@ const Apply =  async (req, res) => { upload(req, res, async (err) => {
              address: address,
              dateOfBirth: dateOfBirth,
            });
+     
      
                 // checking if inserted data meeting the criteria or not
              const error = new_job.validateSync();
