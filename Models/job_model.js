@@ -20,7 +20,7 @@ const mongoose = require('mongoose')
      address: {
        required: true,
        type: String,
-       maxLength: [45, "Address Length Must be 45 Or Less"],
+       maxLength: [60, "Address Length Must be 60 Or Less"],
      },
      dateOfBirth: {
        required: true,
