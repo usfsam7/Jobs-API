@@ -13,8 +13,8 @@ const Apply =  async (req, res) => { upload(req, res, async (err) => {
  
       if (!req.file) return res.json({ msg: 'please, upload your image' }); 
        const userImagePath = req.file.path;
-      console.log(userImagePath)
-      const { fullName, email, address, dateOfBirth } = req.body;
+
+       const { fullName, email, address, dateOfBirth } = req.body;
         if (!fullName || !email || !address || !dateOfBirth)
           return res.json({ msg: "Missing Credentials" });
              
@@ -32,15 +32,15 @@ const Apply =  async (req, res) => { upload(req, res, async (err) => {
               if (error) return res.json({ validationError: error.message });
      
                 // checking if inserted email used before or not
-             const user_email = await Job.findOne({ email: req.body.email });
-              if (user_email) return res.json({ msg: "Email Already used, use another one" });
+             const applicant_email = await Job.findOne({ email: req.body.email });
+              if (applicant_email) return res.json({ msg: "already applied" });
      
             // the age of the user
-         const user_age = new Date().getFullYear() - new Date(dateOfBirth).getFullYear();
-          if (user_age < 20) return res.json({ mgs: "Unavailable Age" });
+         const applicant_age = new Date().getFullYear() - new Date(dateOfBirth).getFullYear();
+          if (applicant_age < 20) return res.json({ mgs: "Unavailable Age" });
      
              // job-data to save
-          const user_data = new Job({ 
+          const applicant_data = new Job({
             fullName: fullName,
             email: email,
             address: address,
@@ -48,8 +48,8 @@ const Apply =  async (req, res) => { upload(req, res, async (err) => {
             userImagePath: userImagePath,
           });
        
-         user_data.save();
-         res.json({ user_data });
+         applicant_data.save();
+         res.json({ applicant_data });
 
       });       
     }

@@ -33,10 +33,11 @@ const mongoose = require('mongoose')
      userImagePath: {
        type: String,
      },
-     createdAt: {
-       type: Schema.Types.Timestamp,
-       default: Date.now 
-    }
+     applied_at: {
+       type: Date,
+       default: Date.now,
+       get: (date) => date.toUTCString()  // Converts date to ISO format
+     },
    },
    { versionKey: false }
  );
@@ -44,6 +45,5 @@ const mongoose = require('mongoose')
 
   const Job = mongoose.model('Job', jobSchema);
   module.exports = Job
-
 
 
