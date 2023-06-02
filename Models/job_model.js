@@ -36,7 +36,7 @@ const mongoose = require('mongoose')
      applied_at: {
        type: Date,
        default: Date.now,
-       get: (date) => date.toUTCString()  // Converts date to ISO format
+       get: (date) => date.toUTCString()  // Converts date to UTC format
      },
    },
    { versionKey: false }
