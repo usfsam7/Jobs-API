@@ -90,7 +90,7 @@ Apply for the job:
 ```http
 POST /api/apply
 ```
- - (the applyer must upload his image befor inserting the information) . request body : 
+ - (the applicant must upload his image befor inserting the information) . request body : 
 ```json
 { 
  "fullName":"james kattil boar", 
