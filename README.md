@@ -19,22 +19,16 @@ To set up the JOBs API on your local machine, please follow these steps:
 1. Clone this repository to your local machine using the following command:
 
    ```shell
-   git clone https://github.com/usefsame7/JOBs.git
+    https://github.com/usefsame7/Jobs-API.git
    ```
 
-2. Navigate to the project directory:
-
-   ```shell
-   cd JOBs
-   ```
-
-3. Install the project dependencies using the package manager of your choice. Assuming you have Node.js and npm installed, run the following command:
+2. Install the project dependencies using the package manager of your choice. Assuming you have Node.js and npm installed, run the following command:
 
    ```shell
    npm install
    ```
 
-4. Create a `.env` file in the project root directory with the following environment variables:
+3. Create a `.env` file in the project root directory with the following environment variables:
 
    ```
    PORT=3000
@@ -44,7 +38,7 @@ To set up the JOBs API on your local machine, please follow these steps:
 
    Replace `<your_database_url>` with the URL of your MongoDB database and `<your_secret_key>` with a secret key of your choice.
 
-5. Start the API server by running the following command:
+4. Start the API server by running the following command:
 
    ```shell
    npm start
