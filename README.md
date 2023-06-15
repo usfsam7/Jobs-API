@@ -19,22 +19,16 @@ To set up the JOBs API on your local machine, please follow these steps:
 1. Clone this repository to your local machine using the following command:
 
    ```shell
-   git clone https://github.com/usefsame7/JOBs.git
+    https://github.com/usefsame7/Jobs-API.git
    ```
 
-2. Navigate to the project directory:
-
-   ```shell
-   cd JOBs
-   ```
-
-3. Install the project dependencies using the package manager of your choice. Assuming you have Node.js and npm installed, run the following command:
+2. Install the project dependencies using the package manager of your choice. Assuming you have Node.js and npm installed, run the following command:
 
    ```shell
    npm install
    ```
 
-4. Create a `.env` file in the project root directory with the following environment variables:
+3. Create a `.env` file in the project root directory with the following environment variables:
 
    ```
    PORT=3000
@@ -44,7 +38,7 @@ To set up the JOBs API on your local machine, please follow these steps:
 
    Replace `<your_database_url>` with the URL of your MongoDB database and `<your_secret_key>` with a secret key of your choice.
 
-5. Start the API server by running the following command:
+4. Start the API server by running the following command:
 
    ```shell
    npm start
@@ -93,26 +87,27 @@ POST /api/apply
  - (the applicant must upload his image befor inserting the information) . request body : 
 ```json
 { 
-    "fullName": "john week atr",
+    "fullName": "john kart bou",
     "email": "john11@gmail.com",
-    "address": "America,bla,33street ",
-    "dateOfBirth": "1995-11-23",
+    "address": "America,bla,33street",
+    "birth_date": "1995-11-23",
 }
 ```
 
 response object:
 ```json
-{
+ {
   "applicant_data": {
-    "fullName": "john week atr",
+    "fullName": "john kart bou",
     "email": "john11@gmail.com",
-    "address": "America,bla,33street ",
-    "dateOfBirth": "1995-11-23",
-    "userImagePath": "images\\dd1eb7c1233895e49204fd9afc403ec0",
-    "_id": "64796217712753d8002432fc",
-    "applied_at": "2023-06-02T03:29:27.270Z"
+    "address": "America,bla,33street",
+    "birth_date": "1995-11-23",
+    "image": "images\\photo_6021521562215235357_y.jpg",
+    "_id": "648b9886135ed0cd6d1e0d73",
+    "applied_at": "2023-06-15T23:02:30.830Z"
   }
 }
+
 ```
 
 ## Contact
