@@ -90,7 +90,7 @@ POST /api/apply
     "fullName": "john week atr",
     "email": "john11@gmail.com",
     "address": "America,bla,33street ",
-    "dateOfBirth": "1995-11-23",
+    "birth_date": "1995-11-23",
 }
 ```
 
@@ -101,7 +101,7 @@ response object:
     "fullName": "john week atr",
     "email": "john11@gmail.com",
     "address": "America,bla,33street ",
-    "dateOfBirth": "1995-11-23",
+    "birth_date": "1995-11-23",
     "userImagePath": "images\\dd1eb7c1233895e49204fd9afc403ec0",
     "_id": "64796217712753d8002432fc",
     "applied_at": "2023-06-02T03:29:27.270Z"
