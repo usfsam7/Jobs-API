@@ -3,19 +3,31 @@
 
 
 
+     const storage = multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, './images/');
+      },
+      filename: (req, file, cb) => {
+        cb(null, file.originalname);
+      }
+     });
+
        // multer configuration
-     const multerConfig = multer({ dest: 'images/', limits: { fileSize: 2000000 } })
+     const multerConfig = multer({ storage: storage, limits: { fileSize: 2000000 }});
+
      const upload =  multer(multerConfig).single('image'); 
    
 const Apply =  async (req, res) => { upload(req, res, async (err) => {
     if (err instanceof multer.MulterError) return res.json({ msg: err.message });
     if (err) return res.json({ msg: err.message });
  
-      if (!req.file) return res.json({ msg: 'please, upload your image' }); 
-       const userImagePath = req.file.path;
+    console.log(req.file);
 
-       const { fullName, email, address, dateOfBirth } = req.body;
-        if (!fullName || !email || !address || !dateOfBirth)
+      if (!req.file) return res.json({ msg: 'please, upload your image' }); 
+       const image_path = req.file.path;
+
+       const { fullName, email, address, birth_date } = req.body;
+        if (!fullName || !email || !address || !birth_date)
           return res.json({ msg: "Missing Credentials" });
              
              // user_data to check validity
@@ -23,7 +35,7 @@ const Apply =  async (req, res) => { upload(req, res, async (err) => {
              fullName: fullName,
              email: email,
              address: address,
-             dateOfBirth: dateOfBirth,
+             birth_date: birth_date,
            });
      
      
@@ -36,7 +48,7 @@ const Apply =  async (req, res) => { upload(req, res, async (err) => {
               if (applicant_email) return res.json({ msg: "already applied" });
      
             // the age of the user
-         const applicant_age = new Date().getFullYear() - new Date(dateOfBirth).getFullYear();
+         const applicant_age = new Date().getFullYear() - new Date(birth_date).getFullYear();
           if (applicant_age < 20) return res.json({ mgs: "Unavailable Age" });
      
              // job-data to save
@@ -44,8 +56,8 @@ const Apply =  async (req, res) => { upload(req, res, async (err) => {
             fullName: fullName,
             email: email,
             address: address,
-            dateOfBirth: dateOfBirth,
-            userImagePath: userImagePath,
+            birth_date: birth_date,
+            image: image_path,
           });
        
          applicant_data.save();

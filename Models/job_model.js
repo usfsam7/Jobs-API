@@ -22,7 +22,7 @@ const mongoose = require('mongoose')
        type: String,
        maxLength: [60, "Address Length Must be 60 Or Less"],
      },
-     dateOfBirth: {
+     birth_date: {
        required: true,
        type: String,
        match: [
@@ -30,13 +30,13 @@ const mongoose = require('mongoose')
          "Invalid Date Format, it must be Like year-month-days (yyyy-mm-dd)",
        ],
      },
-     userImagePath: {
+     image: {
        type: String,
+       require: true,
      },
      applied_at: {
        type: Date,
        default: Date.now,
-       get: (date) => date.toUTCString()  // Converts date to UTC format
      },
    },
    { versionKey: false }
