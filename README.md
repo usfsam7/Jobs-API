@@ -87,26 +87,27 @@ POST /api/apply
  - (the applicant must upload his image befor inserting the information) . request body : 
 ```json
 { 
-    "fullName": "john week atr",
+    "fullName": "john kart bou",
     "email": "john11@gmail.com",
-    "address": "America,bla,33street ",
+    "address": "America,bla,33street",
     "birth_date": "1995-11-23",
 }
 ```
 
 response object:
 ```json
-{
+ {
   "applicant_data": {
-    "fullName": "john week atr",
+    "fullName": "john kart bou",
     "email": "john11@gmail.com",
-    "address": "America,bla,33street ",
+    "address": "America,bla,33street",
     "birth_date": "1995-11-23",
-    "userImagePath": "images\\dd1eb7c1233895e49204fd9afc403ec0",
-    "_id": "64796217712753d8002432fc",
-    "applied_at": "2023-06-02T03:29:27.270Z"
+    "image": "images\\photo_6021521562215235357_y.jpg",
+    "_id": "648b9886135ed0cd6d1e0d73",
+    "applied_at": "2023-06-15T23:02:30.830Z"
   }
 }
+
 ```
 
 ## Contact
