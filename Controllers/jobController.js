@@ -1,22 +1,11 @@
    const Job = require('../Models/job_model')
    const multer = require('multer')
+   const upload  = require('../multer_config')
 
-
-        // multer configuration
-     const storage = multer.diskStorage({
-      destination: (req, file, cb) => {
-        cb(null, './images/');
-      },
-      filename: (req, file, cb) => {
-        cb(null, file.originalname);
-      }
-     });
-
-     const multerConfig = multer({ storage: storage, limits: { fileSize: 2000000 }});
-     const upload =  multer(multerConfig).single('image'); 
+  
    
      
-const Apply =  async (req, res) => { upload(req, res, async (err) => {
+const Apply =  async (req, res) => { upload (req, res, async (err) => {
     if (err instanceof multer.MulterError) return res.json({ msg: err.message });
     if (err) return res.json({ msg: err.message });
  
