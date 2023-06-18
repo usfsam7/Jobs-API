@@ -14,8 +14,9 @@ const mongoose = require('mongoose')
        type: String,
        match: [
          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-         "Provide a correct email",
+         "Provide a valid email",
        ],
+       unique: true
      },
      address: {
        required: true,

@@ -9,7 +9,6 @@ const Apply =  async (req, res) => { upload (req, res, async (err) => {
     if (err instanceof multer.MulterError) return res.json({ msg: err.message });
     if (err) return res.json({ msg: err.message });
  
-    console.log(req.file);
 
       if (!req.file) return res.json({ msg: 'please, upload your image' }); 
        const image_path = req.file.path;
