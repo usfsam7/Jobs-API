@@ -13,7 +13,7 @@ const Registration = async (req, res) => {  const { username, email, password } 
     
    // validating user data
   const err = userToValidate.validateSync();
-  if (err) return res.json({ validationError: err.message });
+  if (err) return res.json({ ValidationError: err.message });
 
   // checking of the username used before or not
   const user = await User.findOne({ username: username });
@@ -31,7 +31,7 @@ const Registration = async (req, res) => {  const { username, email, password } 
     password: hashedPass,
   });
 
-  // saving user with hashed password
+   // saving user with hashed password
   newUser.save();
   res.json({ newUser });
 };
