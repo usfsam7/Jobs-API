@@ -33,7 +33,10 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
     },
   },
-  { versionKey: false }
+  {
+    timestamps: true,
+    versionKey: false
+  }
 );
     
 

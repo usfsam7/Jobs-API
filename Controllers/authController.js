@@ -53,7 +53,7 @@ const Login = async (req, res) => {
   const name = userData.username;
   const id = userData.id;
    
-    // data stored in token
+    // data stored in the token
   const user = { id, name };
   const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "25d" });
    
